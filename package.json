@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/stevensmedia/ravens-gleaning",
   "devDependencies": {
+    "assert": "^1.4.1",
     "mocha": "^4.0.1"
   }
 }
