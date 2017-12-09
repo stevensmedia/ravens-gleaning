@@ -1,0 +1,26 @@
+{
+  "name": "ravens-gleaning",
+  "version": "1.0.0",
+  "description": "ANSI to HTML converter",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stevensmedia/ravens-gleaning.git"
+  },
+  "keywords": [
+    "ANSI",
+    "HTML"
+  ],
+  "author": "Neil Stevens",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stevensmedia/ravens-gleaning/issues"
+  },
+  "homepage": "https://github.com/stevensmedia/ravens-gleaning",
+  "devDependencies": {
+    "mocha": "^4.0.1"
+  }
+}
