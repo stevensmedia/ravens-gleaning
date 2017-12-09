@@ -5,10 +5,12 @@ describe("Raven's Gleaning", function() {
 		assert(require('./index.js'));
 	});
 
-	it("returns non-ANSI strings unmolested", function() {
+	it("returns non-ANSI buffers unmolested", function() {
 		var ravensgleaning = require('./index.js');
-		var plain = "Hi delly ho\nNeighborino";
-		assert(ravensgleaning.html(plain) == plain);
+		var plain = Buffer.from("Hi delly ho\nNeighborino");
+		console.log(plain);
+		console.log(ravensgleaning.html(plain));
+		assert(!ravensgleaning.html(plain).compare(plain));
 	});
 
 });
