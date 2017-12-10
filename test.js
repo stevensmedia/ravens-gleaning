@@ -17,7 +17,7 @@ describe("Raven's Gleaning", function() {
 		var ravensgleaning = require('./index.js');
 		var plain = "\033[1mBold";
 		var html = ravensgleaning.html(plain);
-		expect(html).to.eql('<span style="font-style:bold;color:#ffffff;background-color:#000000;">Bold</span>');
+		expect(html).to.eql('<span style="font-weight:bold;color:#ffffff;background-color:#000000;">Bold</span>');
 	});
 
 	it("handles underscore", function() {
@@ -54,4 +54,19 @@ describe("Raven's Gleaning", function() {
 		var html = ravensgleaning.html(plain);
 		expect(html).to.eql('<span style="color:#c0c0c0;background-color:#c0c0c0;">White</span>');
 	});
+
+	it("handles 256 color foreground codes", function() {
+		var ravensgleaning = require('./index.js');
+		var plain = "\033[1;38;5;56mP\033[0;1;38;5;99molk";
+		var html = ravensgleaning.html(plain);
+		expect(html).to.eql('<span style="font-weight:bold;color:#5f00d7;background-color:#000000;">P</span><span style="font-weight:bold;color:#875fff;background-color:#000000;">olk</span>');
+	});
+
+	it("handles 256 color background codes", function() {
+		var ravensgleaning = require('./index.js');
+		var plain = "\033[1;48;5;56mP\033[0;1;48;5;99molk";
+		var html = ravensgleaning.html(plain);
+		expect(html).to.eql('<span style="font-weight:bold;color:#ffffff;background-color:#5f00d7;">P</span><span style="font-weight:bold;color:#ffffff;background-color:#875fff;">olk</span>');
+	});
+
 });

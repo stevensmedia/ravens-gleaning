@@ -31,9 +31,10 @@ function updateState(state, command) {
 		var parts = command.substr(0, command.length - 1).split(";");
 		for(var i = 0; i < parts.length; ++i) {
 			var num = parseInt(parts[i]);
+			//console.log(num);
 			// Reset
 			if(num == 0) {
-				state = { first: false };
+				state = { first: false, foreground: 7, background: 0 };
 			} else if(num == 1) {
 				state.bold = true;
 			} else if(num == 4) {
@@ -54,18 +55,18 @@ function updateState(state, command) {
 			} else if(num == 38) {
 				i++;
 				// 256 color
-				if(int(parts[i]) == 5) {
+				if(parseInt(parts[i]) == 5) {
 					i++;
-					state.foreground = int(parts[i]);
+					state.foreground = parseInt(parts[i]);
 					//console.log("set fg to " + state.foreground);
 				}
 			// Extended BG color
 			} else if(num == 48) {
 				i++;
 				// 256 color
-				if(int(parts[i]) == 5) {
+				if(parseInt(parts[i]) == 5) {
 					i++;
-					state.background = int(parts[i]);
+					state.background = parseInt(parts[i]);
 					//console.log("set bg to " + state.background);
 				}
 			}
@@ -87,7 +88,7 @@ function htmlForState(state) {
 	}
 	ret += '<span style="';
 	if(state.bold) {
-		ret += "font-style:bold;";
+		ret += "font-weight:bold;";
 	}
 	if(state.underscore) {
 		ret += "text-decoration:underline;";
