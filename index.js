@@ -20,7 +20,7 @@ function updateState(state, command) {
 		state.background = 0;
 	}
 
-	//console.log(command);
+	//console.log('Command: ' + command);
 	if(command.substr(-1) == "m") {
 		var parts = command.substr(0, command.length - 1).split(";");
 		for(var i = 0; i < parts.length; ++i) {
@@ -67,15 +67,11 @@ function updateState(state, command) {
 		}
 	}
 
-	state.foreground = colorIndexToHtml(state.bold, state.foreground);
-	state.background = colorIndexToHtml(false, state.background);
-
 	//console.log(state);
 	return state;
 }
 
 function htmlForState(state) {
-	var fg;
 	var ret = "";
 	ret += '<span style="';
 	if(state.bold) {
@@ -87,12 +83,10 @@ function htmlForState(state) {
 	if(state.blink) {
 		ret += "text-decoration:blink;";
 	}
-	if(state.foreground) {
-		fg = state.foreground;
-	}
-	if(state.background) {
-		bg = state.background;
-	}
+
+	var fg = colorIndexToHtml(state.bold, state.foreground);
+	var bg = colorIndexToHtml(false, state.background);
+
 	if(state.reverse) {
 		ret += "color:" + bg + ";";
 		ret += "background-color:" + fg + ";";
@@ -112,7 +106,8 @@ module.exports = {
 		var ret = Buffer.from([]);
 		var offset = 0;
 		var state = {};
-		var opened = false;
+		state = updateState(state, '');
+		ret = Buffer.concat([ret, Buffer.from(htmlForState(state))]);
 		do {
 			// Read next byte
 			var byte = buf.readUInt8(offset);
@@ -134,11 +129,8 @@ module.exports = {
 
 					// Process the command
 					state = updateState(state, command);
-					if(opened) {
-						ret = Buffer.concat([ret, Buffer.from("</span>")]);
-					}
+					ret = Buffer.concat([ret, Buffer.from("</span>")]);
 					ret = Buffer.concat([ret, Buffer.from(htmlForState(state))]);
-					opened = true;
 					continue;
 				}
 			}
@@ -147,9 +139,7 @@ module.exports = {
 			offset++;
 			ret = Buffer.concat([ret, Buffer.from([byte])]);
 		} while(offset < len);
-		if(opened) {
-			ret = Buffer.concat([ret, Buffer.from("</span>")]);
-		}
+		ret = Buffer.concat([ret, Buffer.from("</span>")]);
 		return ret.toString();
 	}
 };
