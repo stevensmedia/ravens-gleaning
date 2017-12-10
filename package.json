@@ -1,7 +1,7 @@
 {
   "name": "ravens-gleaning",
   "version": "1.0.0",
-  "description": "ANSI Color Control Sequence to HTML converter",
+  "description": "ANSI color control sequence to HTML converter",
   "main": "index.js",
   "scripts": {
     "test": "mocha"
