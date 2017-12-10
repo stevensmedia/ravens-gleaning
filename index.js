@@ -12,12 +12,6 @@ function colorIndexToHtml(bold, color) {
 }
 
 function updateState(state, command) {
-	if(!Object.keys(state).includes('first')) {
-		state.first = true;
-	} else {
-		state.first = false;
-	}
-
 	if(!Object.keys(state).includes('foreground')) {
 		state.foreground = 7;
 	}
@@ -34,7 +28,7 @@ function updateState(state, command) {
 			//console.log(num);
 			// Reset
 			if(num == 0) {
-				state = { first: false, foreground: 7, background: 0 };
+				state = { foreground: 7, background: 0 };
 			} else if(num == 1) {
 				state.bold = true;
 			} else if(num == 4) {
@@ -83,9 +77,6 @@ function updateState(state, command) {
 function htmlForState(state) {
 	var fg;
 	var ret = "";
-	if(!state.first) {
-		ret += "</span>";
-	}
 	ret += '<span style="';
 	if(state.bold) {
 		ret += "font-weight:bold;";
@@ -143,6 +134,9 @@ module.exports = {
 
 					// Process the command
 					state = updateState(state, command);
+					if(opened) {
+						ret = Buffer.concat([ret, Buffer.from("</span>")]);
+					}
 					ret = Buffer.concat([ret, Buffer.from(htmlForState(state))]);
 					opened = true;
 					continue;
