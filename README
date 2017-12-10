@@ -1,4 +1,4 @@
-How to use ravens-cleaning:
+How to use ravens-gleaning:
 
 var ravensgleaning = require('ravens-gleaning');
 var ansistring = "<<<raw ansi codes go here>>>";
