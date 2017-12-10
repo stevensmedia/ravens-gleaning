@@ -19,4 +19,29 @@ describe("Raven's Gleaning", function() {
 		var html = ravensgleaning.html(plain);
 		expect(html).to.eql('<span style="font-style:bold;color:#7f7f7f;background-color:#000000;">Bold</span>');
 	});
+
+	it("handles underscore", function() {
+		var ravensgleaning = require('./index.js');
+		var plain = "\033[4mUnderscore";
+		var html = ravensgleaning.html(plain);
+		expect(html).to.eql('<span style="text-decoration:underline;color:#7f7f7f;background-color:#000000;">Underscore</span>');
+	});
+
+	it("handles blink", function() {
+		var ravensgleaning = require('./index.js');
+		var plain = "\033[5mBlink";
+		var html = ravensgleaning.html(plain);
+		expect(html).to.eql('<span style="text-decoration:blink;color:#7f7f7f;background-color:#000000;">Blink</span>');
+	});
+
+	it("handles reverse", function() {
+		var ravensgleaning = require('./index.js');
+		var plain = "\033[7mReverse";
+		var html = ravensgleaning.html(plain);
+		expect(html).to.eql('<span style="color:#000000;background-color:#7f7f7f;">Reverse</span>');
+	});
+
+
+
+
 });
