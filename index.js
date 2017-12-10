@@ -1,4 +1,4 @@
-const CSI1 = "".codePointAt(0);
+const CSI1 = "\033".codePointAt(0);
 const CSI2 = "[".codePointAt(0);
 
 function updateState(state, command) {
