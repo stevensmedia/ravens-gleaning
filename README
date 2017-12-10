@@ -1,5 +1,5 @@
 How to use ravens-cleaning:
 
 var ravensgleaning = require('ravens-gleaning');
-var ansistring =  newa Buffer("<<<raw ansi codes go here>>>");
+var ansistring = "<<<raw ansi codes go here>>>";
 var html = ravensgleaning.html(ansistring);
