@@ -17,31 +17,41 @@ describe("Raven's Gleaning", function() {
 		var ravensgleaning = require('./index.js');
 		var plain = "\033[1mBold";
 		var html = ravensgleaning.html(plain);
-		expect(html).to.eql('<span style="font-style:bold;color:#7f7f7f;background-color:#000000;">Bold</span>');
+		expect(html).to.eql('<span style="font-style:bold;color:#ffffff;background-color:#000000;">Bold</span>');
 	});
 
 	it("handles underscore", function() {
 		var ravensgleaning = require('./index.js');
 		var plain = "\033[4mUnderscore";
 		var html = ravensgleaning.html(plain);
-		expect(html).to.eql('<span style="text-decoration:underline;color:#7f7f7f;background-color:#000000;">Underscore</span>');
+		expect(html).to.eql('<span style="text-decoration:underline;color:#c0c0c0;background-color:#000000;">Underscore</span>');
 	});
 
 	it("handles blink", function() {
 		var ravensgleaning = require('./index.js');
 		var plain = "\033[5mBlink";
 		var html = ravensgleaning.html(plain);
-		expect(html).to.eql('<span style="text-decoration:blink;color:#7f7f7f;background-color:#000000;">Blink</span>');
+		expect(html).to.eql('<span style="text-decoration:blink;color:#c0c0c0;background-color:#000000;">Blink</span>');
 	});
 
 	it("handles reverse", function() {
 		var ravensgleaning = require('./index.js');
 		var plain = "\033[7mReverse";
 		var html = ravensgleaning.html(plain);
-		expect(html).to.eql('<span style="color:#000000;background-color:#7f7f7f;">Reverse</span>');
+		expect(html).to.eql('<span style="color:#000000;background-color:#c0c0c0;">Reverse</span>');
 	});
 
+	it("handles foreground color", function() {
+		var ravensgleaning = require('./index.js');
+		var plain = "\033[30mBlack";
+		var html = ravensgleaning.html(plain);
+		expect(html).to.eql('<span style="color:#000000;background-color:#000000;">Black</span>');
+	});
 
-
-
+	it("handles background color", function() {
+		var ravensgleaning = require('./index.js');
+		var plain = "\033[47mWhite";
+		var html = ravensgleaning.html(plain);
+		expect(html).to.eql('<span style="color:#c0c0c0;background-color:#c0c0c0;">White</span>');
+	});
 });
