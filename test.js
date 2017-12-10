@@ -1,15 +1,16 @@
 var assert = require('assert');
+var expect = require('expect.js')
 
 describe("Raven's Gleaning", function() {
 	it("parses", function() {
-		assert(require('./index.js'));
+		expect(require).withArgs('./index.js').to.not.throwException();
 	});
 
 	it("returns non-ANSI buffers unmolested", function() {
 		var ravensgleaning = require('./index.js');
-		var plain = Buffer.from("Hi delly ho\nNeighborino");
+		var plain ="Hi delly ho\nNeighborino";
 		var html = ravensgleaning.html(plain);
-		assert(Buffer.from(html).compare(plain) == 0);
+		expect(html).to.eql(plain);
 	});
 
 });
