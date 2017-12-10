@@ -8,7 +8,8 @@ describe("Raven's Gleaning", function() {
 	it("returns non-ANSI buffers unmolested", function() {
 		var ravensgleaning = require('./index.js');
 		var plain = Buffer.from("Hi delly ho\nNeighborino");
-		assert(!ravensgleaning.html(plain).compare(plain));
+		var html = ravensgleaning.html(plain);
+		assert(Buffer.from(html).compare(plain) == 0);
 	});
 
 });

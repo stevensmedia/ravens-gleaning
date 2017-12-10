@@ -2,16 +2,15 @@ const CSI1 = "".codePointAt(0);
 const CSI2 = "[".codePointAt(0);
 module.exports = {
 	html: function(buf) {
-		var ret = Buffer.alloc(buf.length);
-		var offset_in = 0;
-		var offset_out = 0;
+		var ret = "";
+		var offset = 0;
 		do {
-			var byte = buf.readUInt8(offset_in);
+			var byte = buf.readUInt8(offset);
 			if(byte == CSI1) {
 				
 			}
-			ret.writeUInt8(byte, offset_out++);
-		} while(++offset_in < buf.length);
+			ret += String.fromCodePoint(byte);
+		} while(++offset < buf.length);
 		return ret;
 	}
 };
