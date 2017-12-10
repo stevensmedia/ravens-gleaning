@@ -13,4 +13,10 @@ describe("Raven's Gleaning", function() {
 		expect(html).to.eql(plain);
 	});
 
+	it("handles bold", function() {
+		var ravensgleaning = require('./index.js');
+		var plain = "[1mBold";
+		var html = ravensgleaning.html(plain);
+		expect(html).to.eql('<span style="font-style:bold;color:#7f7f7f;background-color:#000000;">Bold</span>');
+	});
 });
