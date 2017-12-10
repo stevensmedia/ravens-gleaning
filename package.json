@@ -1,5 +1,5 @@
 {
-  "name": "ravens-gleaning",
+  "name": "@stevensmedia/ravens-gleaning",
   "version": "1.0.0",
   "description": "ANSI color control sequence to HTML converter",
   "main": "index.js",
