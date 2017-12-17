@@ -1,6 +1,3 @@
-const CSI1 = "\033".codePointAt(0);
-const CSI2 = "[".codePointAt(0);
-
 function colorIndexToHtml(bold, color) {
 	//console.log("Color for " + color);
 	if(color < 8 && bold) {
@@ -113,9 +110,9 @@ module.exports = {
 			var byte = buf.readUInt8(offset);
 
 			// If we see ESC, get to work
-			if(byte == CSI1) {
+			if(byte == "\033".codePointAt(0)) {
 				// If next char is [, this is a sequence we care about
-				if(offset + 1 < len && buf.readUInt8(offset + 1) == CSI2) {
+				if(offset + 1 < len && buf.readUInt8(offset + 1) == "[".codePointAt(0)) {
 					// Jump past the CSI
 					offset += 2;
 					var command = "";
