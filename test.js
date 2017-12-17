@@ -72,4 +72,13 @@ describe("Raven's Gleaning", function() {
 		expect(html).to.eql(preamble + post + '<span style="font-weight:bold;color:#ffffff;background-color:#5f00d7;">P</span><span style="font-weight:bold;color:#ffffff;background-color:#875fff;">olk</span>');
 	});
 
+	it("escapes special characters", function() {
+		var ravensgleaning = require('./index.js');
+		var plain = "\033[47m<html span=\"\">";
+		var html = ravensgleaning.html(plain);
+		expect(html).to.eql(preamble + post + '<span style="color:#c0c0c0;background-color:#c0c0c0;">&lt;html span=&quot;&quot;&gt;</span>');
+	});
+
+
+
 });

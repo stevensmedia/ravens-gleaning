@@ -130,6 +130,22 @@ module.exports = {
 					ret = Buffer.concat([ret, Buffer.from(htmlForState(state))]);
 					continue;
 				}
+			} else if (byte == "&".codePointAt(0)) {
+				ret = Buffer.concat([ret, Buffer.from("&amp;")]);
+				++offset;
+				continue;
+			} else if (byte == "<".codePointAt(0)) {
+				ret = Buffer.concat([ret, Buffer.from("&lt;")]);
+				++offset;
+				continue;
+			} else if (byte == ">".codePointAt(0)) {
+				ret = Buffer.concat([ret, Buffer.from("&gt;")]);
+				++offset;
+				continue;
+			} else if (byte == '"'.codePointAt(0)) {
+				ret = Buffer.concat([ret, Buffer.from("&quot;")]);
+				++offset;
+				continue;
 			}
 
 			// Pass through
