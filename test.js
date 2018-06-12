@@ -16,6 +16,20 @@ describe("Raven's Gleaning", function() {
 		expect(html).to.eql(preamble + plain + post);
 	});
 
+	it("handles reset", function() {
+		var ravensgleaning = require('./index.js');
+		var plain = "\033[1mBold\033[0mReset";
+		var html = ravensgleaning.html(plain);
+		expect(html).to.eql(preamble + post + '<span style="font-weight:bold;color:#ffffff;background-color:#000000;">Bold</span>' + preamble + "Reset" + post);
+	});
+
+	it("handles mushlog", function() {
+		var ravensgleaning = require('./index.js');
+		var plain = "\033[1mBold\033[0mReset";
+		var html = ravensgleaning.html(plain, true);
+		expect(html).to.eql('<span style="font-weight:bold;color:#ffffff;background-color:#000000;">Bold</span>' + "Reset");
+	});
+
 	it("handles bold", function() {
 		var ravensgleaning = require('./index.js');
 		var plain = "\033[1mBold";

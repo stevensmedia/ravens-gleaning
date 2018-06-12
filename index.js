@@ -68,6 +68,14 @@ function updateState(state, command) {
 	return state;
 }
 
+function isStateReset(state) {
+	return !state.bold &&
+	       !state.underscore &&
+	       !state.blink &&
+	       state.foreground == 7 &&
+	       state.background == 0;
+}
+
 function htmlForState(state) {
 	var ret = "";
 	ret += '<span style="';
@@ -97,14 +105,16 @@ function htmlForState(state) {
 }
 
 module.exports = {
-	html: function(str) {
+	html: function(str, mushLog = false) {
 		var buf = Buffer.from(str);
 		var len = buf.length;
 		var ret = Buffer.from([]);
 		var offset = 0;
 		var state = {};
 		state = updateState(state, '');
-		ret = Buffer.concat([ret, Buffer.from(htmlForState(state))]);
+		if(!mushLog) {
+			ret = Buffer.concat([ret, Buffer.from(htmlForState(state))]);
+		}
 		do {
 			// Read next byte
 			var byte = buf.readUInt8(offset);
@@ -124,10 +134,16 @@ module.exports = {
 						command += char;
 					} while(++offset < len && char.match(/[0-9;]/));
 
+					var fromReset = isStateReset(state);
 					// Process the command
 					state = updateState(state, command);
-					ret = Buffer.concat([ret, Buffer.from("</span>")]);
-					ret = Buffer.concat([ret, Buffer.from(htmlForState(state))]);
+					var toReset = isStateReset(state);
+					if(!fromReset || !mushLog) {
+						ret = Buffer.concat([ret, Buffer.from("</span>")]);
+					}
+					if(!toReset || !mushLog) {
+						ret = Buffer.concat([ret, Buffer.from(htmlForState(state))]);
+					}
 					continue;
 				}
 			} else if (byte == "&".codePointAt(0)) {
@@ -152,7 +168,10 @@ module.exports = {
 			offset++;
 			ret = Buffer.concat([ret, Buffer.from([byte])]);
 		} while(offset < len);
-		ret = Buffer.concat([ret, Buffer.from("</span>")]);
+		var isReset = isStateReset(state);
+		if(!isReset || !mushLog) {
+			ret = Buffer.concat([ret, Buffer.from("</span>")]);
+		}
 		return ret.toString();
 	}
 };
